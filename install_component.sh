@@ -10,21 +10,30 @@ SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 
 source $SCRIPT_DIR/versions.sh
 
+case "$(uname -m)" in
+    aarch64)
+        ARCH="aarch64"
+        ;;
+    x86_64)
+        ARCH="amd64"
+        ;;
+esac
+
 for component in "$@"; do
     case "$component" in
         kubeadm)
             echo "installing kubeadm ${KUBEADM_VERSION}"
-            curl -sSLf -o /usr/local/bin/kubeadm https://storage.googleapis.com/kubernetes-release/release/${KUBEADM_VERSION}/bin/linux/amd64/kubeadm
+            curl -sSLf -o /usr/local/bin/kubeadm https://storage.googleapis.com/kubernetes-release/release/${KUBEADM_VERSION}/bin/linux/$ARCH/kubeadm
             chmod +x /usr/local/bin/kubeadm
             ;;
         kubelet)
             echo "installing kubelet ${KUBELET_VERSION}"
-            curl -sSLf -o /usr/local/bin/kubelet https://storage.googleapis.com/kubernetes-release/release/${KUBELET_VERSION}/bin/linux/amd64/kubelet
+            curl -sSLf -o /usr/local/bin/kubelet https://storage.googleapis.com/kubernetes-release/release/${KUBELET_VERSION}/bin/linux/$ARCH/kubelet
             chmod +x /usr/local/bin/kubelet
             ;;
         kubectl)
             echo "installing kubectl ${KUBECTL_VERSION}"
-            curl -sSLf -o /usr/local/bin/kubectl https://storage.googleapis.com/kubernetes-release/release/${KUBECTL_VERSION}/bin/linux/amd64/kubectl
+            curl -sSLf -o /usr/local/bin/kubectl https://storage.googleapis.com/kubernetes-release/release/${KUBECTL_VERSION}/bin/linux/$ARCH/kubectl
             chmod +x /usr/local/bin/kubectl
             ;;
         release)
