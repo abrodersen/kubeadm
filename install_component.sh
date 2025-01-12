@@ -37,12 +37,12 @@ for component in "$@"; do
             chmod +x /usr/local/bin/kubectl
             ;;
         release)
-            echo "installing kubelet unit file ${RELEASE_VERSION}"
-            curl -sSLf "https://raw.githubusercontent.com/kubernetes/release/${RELEASE_VERSION}/cmd/kubepkg/templates/latest/deb/kubelet/lib/systemd/system/kubelet.service" | sed "s:/usr/bin:/usr/local/bin:g" > /etc/systemd/system/kubelet.service
+            echo "installing kubelet unit file ${KUBERNETES_RELEASE_VERSION}"
+            curl -sSLf "https://raw.githubusercontent.com/kubernetes/release/${KUBERNETES_RELEASE_VERSION}/cmd/kubepkg/templates/latest/deb/kubelet/lib/systemd/system/kubelet.service" | sed "s:/usr/bin:/usr/local/bin:g" > /etc/systemd/system/kubelet.service
 
-            echo "installing kubeadm unit override file ${RELEASE_VERSION}"
+            echo "installing kubeadm unit override file ${KUBERNETES_RELEASE_VERSION}"
             mkdir -p /etc/systemd/system/kubelet.service.d
-            curl -sSLf "https://raw.githubusercontent.com/kubernetes/release/${RELEASE_VERSION}/cmd/kubepkg/templates/latest/deb/kubeadm/10-kubeadm.conf" | sed "s:/usr/bin:/usr/local/bin:g" > /etc/systemd/system/kubelet.service.d/10-kubeadm.conf
+            curl -sSLf "https://raw.githubusercontent.com/kubernetes/release/${KUBERNETES_RELEASE_VERSION}/cmd/kubepkg/templates/latest/deb/kubeadm/10-kubeadm.conf" | sed "s:/usr/bin:/usr/local/bin:g" > /etc/systemd/system/kubelet.service.d/10-kubeadm.conf
         
             echo "reloading daemon configs"
 	        systemctl daemon-reload
