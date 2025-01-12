@@ -12,7 +12,7 @@ source $SCRIPT_DIR/versions.sh
 
 case "$(uname -m)" in
     aarch64)
-        ARCH="aarch64"
+        ARCH="arm64"
         ;;
     x86_64)
         ARCH="amd64"
