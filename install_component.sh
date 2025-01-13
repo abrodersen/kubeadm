@@ -47,5 +47,14 @@ for component in "$@"; do
             echo "reloading daemon configs"
 	        systemctl daemon-reload
             ;;
+        crictl)
+            CRICTL_VERSION="v1.24.2"
+            echo "installing crictl ${CRICTL_VERSION}"
+            curl -sSL "https://github.com/kubernetes-sigs/cri-tools/releases/download/${CRICTL_VERSION}/crictl-${CRICTL_VERSION}-linux-$ARCH.tar.gz" | tar -C /usr/local/bin/ -xzf -
+            ;;
+        *)
+            echo "unrecognized component $component, skipping"
+            continue
+            ;;
     esac
 done
